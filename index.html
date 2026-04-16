@@ -3,174 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silhouette | Executive Engineering Dashboard</title>
+    <title>Silhouette | Advanced Engineering Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Manrope:wght@700;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050a15; color: #e2e8f0; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .accent-border { border-left: 4px solid #3b82f6; }
-        .shimmer { background: linear-gradient(90deg, #1e293b 0%, #334155 50%, #1e293b 100%); background-size: 200% 100%; animation: shimmer 2s infinite; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        body { font-family: 'Inter', sans-serif; background-color: #050a15; color: #e2e8f0; scroll-behavior: smooth; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .sidebar-active { background: rgba(59, 130, 246, 0.15); border-right: 3px solid #3b82f6; color: white; }
+        .status-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen overflow-x-hidden">
+<body class="min-h-screen overflow-hidden">
 
-    <nav class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center">
+    <nav class="h-16 glass px-6 flex justify-between items-center fixed top-0 w-full z-50">
         <div class="flex items-center gap-4">
-            <span class="text-2xl font-black tracking-tighter text-white font-['Manrope']">SILHOUETTE<span class="text-blue-500">.</span></span>
-            <div class="h-6 w-[1px] bg-slate-700 mx-2"></div>
-            <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">Executive Project Monitor</span>
+            <span class="text-xl font-black tracking-tighter text-white font-['Manrope']">SILHOUETTE<span class="text-blue-500">.</span></span>
+            <div class="hidden md:block h-6 w-[1px] bg-slate-700 mx-2"></div>
+            <div class="hidden md:flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full status-pulse"></span>
+                <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">System Online: Riyadh Central</span>
+            </div>
         </div>
         <div class="flex items-center gap-6">
-            <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest text-slate-400">
-                <a href="#" class="text-blue-400">Analysis</a>
-                <a href="#" class="hover:text-white transition-colors">Resources</a>
-                <a href="#" class="hover:text-white transition-colors">Archive</a>
+            <div class="text-right hidden sm:block">
+                <p class="text-[9px] text-slate-500 font-bold uppercase">Local Time</p>
+                <p id="local-time" class="text-xs font-bold mono tracking-tighter text-blue-400">00:00:00</p>
             </div>
-            <button class="relative text-slate-400 hover:text-white">
-                <span class="material-symbols-outlined">notifications</span>
-                <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
             <div class="flex items-center gap-3 bg-slate-800/50 p-1 pr-4 rounded-full border border-white/5">
                 <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-xs">TA</div>
-                <span class="text-xs font-bold">T. Abousakhar</span>
+                <span class="text-xs font-bold text-white hidden md:block">Tarek Abousakhar</span>
             </div>
         </div>
     </nav>
 
-    <div class="flex">
-        <aside class="w-20 lg:w-64 h-[calc(100vh-72px)] sticky top-[72px] bg-[#0f172a] border-r border-white/5 p-4 flex flex-col gap-4">
-            <div class="p-4 bg-blue-600/10 rounded-xl mb-4">
-                <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Current Active</p>
-                <h3 class="text-sm font-bold text-white uppercase">Vertex Spire II</h3>
+    <div class="flex pt-16 h-screen">
+        <aside class="w-20 lg:w-64 bg-[#0f172a] border-r border-white/5 p-4 flex flex-col gap-2 z-40">
+            <button onclick="showSection('overview')" id="btn-overview" class="sidebar-item sidebar-active flex items-center gap-4 p-3 rounded-lg transition-all text-sm group">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="hidden lg:block font-semibold">Overview</span>
+            </button>
+            <button onclick="showSection('structural')" id="btn-structural" class="sidebar-item flex items-center gap-4 p-3 text-slate-400 hover:bg-white/5 rounded-lg transition-all text-sm group">
+                <span class="material-symbols-outlined">architecture</span>
+                <span class="hidden lg:block font-semibold">Structural Analytics</span>
+            </button>
+            <button onclick="showSection('materials')" id="btn-materials" class="sidebar-item flex items-center gap-4 p-3 text-slate-400 hover:bg-white/5 rounded-lg transition-all text-sm group">
+                <span class="material-symbols-outlined">inventory_2</span>
+                <span class="hidden lg:block font-semibold">Materials Log</span>
+            </button>
+            <div class="mt-auto p-4 glass rounded-xl hidden lg:block">
+                <p class="text-[9px] font-bold text-slate-500 uppercase mb-2">Network Health</p>
+                <div class="flex gap-1">
+                    <div class="h-4 w-1 bg-green-500 rounded-full"></div>
+                    <div class="h-4 w-1 bg-green-500 rounded-full"></div>
+                    <div class="h-4 w-1 bg-green-500 rounded-full"></div>
+                    <div class="h-4 w-1 bg-slate-700 rounded-full"></div>
+                </div>
             </div>
-            <nav class="flex flex-col gap-2">
-                <button class="flex items-center gap-4 p-3 bg-blue-600 rounded-lg text-white font-bold text-sm">
-                    <span class="material-symbols-outlined">dashboard</span> <span class="hidden lg:block">Overview</span>
-                </button>
-                <button class="flex items-center gap-4 p-3 text-slate-400 hover:bg-white/5 rounded-lg transition-all text-sm">
-                    <span class="material-symbols-outlined">architecture</span> <span class="hidden lg:block">Structural Analysis</span>
-                </button>
-                <button class="flex items-center gap-4 p-3 text-slate-400 hover:bg-white/5 rounded-lg transition-all text-sm">
-                    <span class="material-symbols-outlined">inventory_2</span> <span class="hidden lg:block">Materials Log</span>
-                </button>
-            </nav>
         </aside>
 
-        <main class="flex-1 p-8 space-y-8">
+        <main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             
-            <div class="flex justify-between items-end">
-                <div>
-                    <h1 class="text-4xl font-extrabold tracking-tighter text-white mb-2 uppercase">Project Status: <span class="text-blue-500">Live</span></h1>
-                    <p class="text-slate-400 text-sm font-medium">Monitoring Structural Integrity & Site Progress // Riyadh, KSA</p>
-                </div>
-                <div class="flex gap-4">
-                    <button onclick="alert('Generating PDF Report...')" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase transition-all">Download Report</button>
-                    <button onclick="location.reload()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-xs font-bold uppercase shadow-lg shadow-blue-900/20 transition-all">Refresh Data</button>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="glass p-6 rounded-2xl">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Completion</p>
-                    <div class="flex items-end justify-between">
-                        <span class="text-3xl font-black text-white">68<span class="text-blue-500">%</span></span>
-                        <span class="text-green-500 text-xs font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">trending_up</span> +2.4%</span>
+            <div id="section-overview" class="content-section active space-y-8">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h1 class="text-3xl font-extrabold tracking-tighter text-white uppercase">Vertex Spire <span class="text-blue-500">II</span></h1>
+                        <p class="text-slate-400 text-sm font-medium">Main Construction Dashboard // Zone A-12</p>
                     </div>
-                </div>
-                <div class="glass p-6 rounded-2xl">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Safety Score</p>
-                    <div class="flex items-end justify-between">
-                        <span class="text-3xl font-black text-white">99<span class="text-blue-500">%</span></span>
-                        <span class="text-slate-500 text-[10px] uppercase font-bold">Stable</span>
-                    </div>
-                </div>
-                <div class="glass p-6 rounded-2xl">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Wind Load</p>
-                    <div class="flex items-end justify-between">
-                        <span class="text-3xl font-black text-white">0.14<span class="text-xs text-slate-500 ml-1">rad/s</span></span>
-                        <div class="w-12 h-1 bg-slate-700 rounded-full overflow-hidden"><div class="bg-blue-500 h-full w-1/3"></div></div>
-                    </div>
-                </div>
-                <div class="glass p-6 rounded-2xl border-l-4 border-red-500">
-                    <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-2">Critical Alerts</p>
-                    <div class="flex items-end justify-between">
-                        <span class="text-3xl font-black text-white">02</span>
-                        <span class="text-xs font-bold text-red-500 animate-pulse uppercase">Action Required</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-8">
-                <div class="col-span-12 lg:col-span-8 space-y-6">
-                    <div class="relative aspect-video rounded-3xl overflow-hidden border border-white/5 group">
-                        <img src="https://images.unsplash.com/photo-1503387762-592dea58ef4e?auto=format&fit=crop&q=80&w=1200" alt="Architectural Render" class="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#050a15] via-transparent to-transparent"></div>
-                        <div class="absolute bottom-8 left-8">
-                            <h2 class="text-2xl font-bold text-white mb-1">Vertex Spire Phase II</h2>
-                            <p class="text-blue-400 text-xs font-bold uppercase tracking-[0.2em]">Live Simulation Mode</p>
-                        </div>
-                        <div class="absolute top-6 right-6 flex gap-2">
-                            <span class="bg-black/60 backdrop-blur-md px-3 py-1 rounded text-[10px] font-bold uppercase text-white border border-white/10">3D Wireframe</span>
-                            <span class="bg-blue-600 px-3 py-1 rounded text-[10px] font-bold uppercase text-white shadow-lg">BIM Level 3</span>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="glass p-4 rounded-xl flex items-center gap-4">
-                            <div class="w-10 h-10 rounded bg-blue-600/20 flex items-center justify-center text-blue-500"><span class="material-symbols-outlined">grid_view</span></div>
-                            <div><p class="text-[10px] text-slate-500 uppercase font-bold">Glazing</p><h4 class="text-xs font-bold">Low-E T-80</h4></div>
-                        </div>
-                        <div class="glass p-4 rounded-xl flex items-center gap-4">
-                            <div class="w-10 h-10 rounded bg-blue-600/20 flex items-center justify-center text-blue-500"><span class="material-symbols-outlined">hardware</span></div>
-                            <div><p class="text-[10px] text-slate-500 uppercase font-bold">Structural</p><h4 class="text-xs font-bold">Grade 80 Steel</h4></div>
-                        </div>
-                        <div class="glass p-4 rounded-xl flex items-center gap-4">
-                            <div class="w-10 h-10 rounded bg-blue-600/20 flex items-center justify-center text-blue-500"><span class="material-symbols-outlined">texture</span></div>
-                            <div><p class="text-[10px] text-slate-500 uppercase font-bold">Core</p><h4 class="text-xs font-bold">C-Matrix Comp</h4></div>
-                        </div>
+                    <div class="flex gap-3">
+                        <button onclick="simulateReport()" class="glass hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold uppercase transition-all flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">download</span> Report
+                        </button>
+                        <button onclick="refreshData()" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase shadow-lg shadow-blue-900/40 transition-all">Update Sync</button>
                     </div>
                 </div>
 
-                <div class="col-span-12 lg:col-span-4 space-y-6">
-                    <div class="glass rounded-3xl overflow-hidden p-2">
-                        <div class="relative aspect-square rounded-2xl overflow-hidden mb-4 border border-white/5">
-                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=600" alt="Site Camera" class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4 flex items-center gap-2">
-                                <span class="w-2 h-2 bg-red-600 rounded-full animate-ping"></span>
-                                <span class="text-[10px] font-black uppercase text-white tracking-widest bg-black/40 px-2 py-1 rounded">Cam 08: Main Site</span>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="glass p-5 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10"><span class="material-symbols-outlined text-4xl">trending_up</span></div>
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Project Progress</p>
+                        <h3 class="text-3xl font-black text-white" id="stat-progress">68.2%</h3>
+                        <div class="w-full bg-slate-800 h-1 mt-4 rounded-full"><div class="bg-blue-500 h-full transition-all duration-1000" style="width: 68%"></div></div>
+                    </div>
+                    <div class="glass p-5 rounded-2xl">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Active Labor</p>
+                        <h3 class="text-3xl font-black text-white" id="stat-labor">412</h3>
+                        <p class="text-[9px] text-green-500 font-bold mt-2">● ON-SITE</p>
+                    </div>
+                    <div class="glass p-5 rounded-2xl">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Concrete PSI</p>
+                        <h3 class="text-3xl font-black text-white text-blue-400" id="stat-psi">8,420</h3>
+                        <p class="text-[9px] text-slate-500 font-bold mt-2">AVG. CORE STRENGTH</p>
+                    </div>
+                    <div class="glass p-5 rounded-2xl border-l-4 border-red-500/50">
+                        <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Safety Incidents</p>
+                        <h3 class="text-3xl font-black text-white">00</h3>
+                        <p class="text-[9px] text-slate-500 font-bold mt-2">L.T.I FREE DAYS: 142</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-12 gap-8">
+                    <div class="col-span-12 lg:col-span-8 space-y-6">
+                        <div class="relative aspect-video rounded-3xl overflow-hidden glass group">
+                            <div class="absolute top-6 left-6 z-20 flex items-center gap-3">
+                                <span class="bg-red-600 w-2 h-2 rounded-full animate-ping"></span>
+                                <span class="text-[10px] font-bold text-white uppercase tracking-widest bg-black/50 px-3 py-1 rounded-full backdrop-blur-sm">Live Feed: North Spire</span>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200" class="w-full h-full object-cover opacity-80" alt="Construction">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#050a15] to-transparent opacity-60"></div>
+                            <div class="absolute bottom-8 left-8">
+                                <p class="text-blue-400 font-bold text-xs uppercase tracking-widest mb-1">Visual Recognition Active</p>
+                                <h2 class="text-xl font-bold text-white">Steel Frame Assembly - Level 42</h2>
                             </div>
                         </div>
-                        <div class="p-4">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4">Engineering Log</h3>
-                            <div class="space-y-4">
-                                <div class="accent-border pl-4">
-                                    <p class="text-[10px] font-mono text-blue-400">08:42 AM</p>
-                                    <p class="text-xs font-medium text-slate-200">Foundation core pouring complete. Density verified.</p>
-                                </div>
-                                <div class="pl-4 border-l-4 border-slate-700">
-                                    <p class="text-[10px] font-mono text-slate-500">Yesterday</p>
-                                    <p class="text-xs font-medium text-slate-400">Laminar flow analysis passed 120% load test.</p>
-                                </div>
+                    </div>
+
+                    <div class="col-span-12 lg:col-span-4 space-y-6">
+                        <div class="glass p-6 rounded-3xl h-full">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Structural Load Trend</h3>
+                            <canvas id="loadChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-structural" class="content-section space-y-8">
+                <h1 class="text-3xl font-extrabold text-white uppercase">Structural <span class="text-blue-500">Analysis</span></h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glass p-8 rounded-3xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Seismic Simulation</h3>
+                        <div class="h-64 flex items-center justify-center bg-slate-900/50 rounded-2xl border border-dashed border-white/10">
+                            <span class="material-symbols-outlined text-6xl text-blue-500/20 animate-pulse">waves</span>
+                        </div>
+                    </div>
+                    <div class="glass p-8 rounded-3xl">
+                        <h3 class="text-lg font-bold text-white mb-4">Wind Tunnel Data</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-xs mb-2"><span>North Elevation</span><span class="mono">14.2 m/s</span></div>
+                                <div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-blue-500 w-[65%]"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-2"><span>Core Oscillation</span><span class="mono">0.02 mm</span></div>
+                                <div class="h-2 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-green-500 w-[12%]"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div id="section-materials" class="content-section space-y-8">
+                <h1 class="text-3xl font-extrabold text-white uppercase">Materials <span class="text-blue-500">Inventory</span></h1>
+                <div class="glass rounded-3xl overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-white/5 text-[10px] uppercase font-bold text-slate-400">
+                            <tr>
+                                <th class="p-5">Material ID</th>
+                                <th class="p-5">Specification</th>
+                                <th class="p-5">Quantity</th>
+                                <th class="p-5">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-white/5">
+                            <tr class="hover:bg-white/5 transition-all">
+                                <td class="p-5 font-bold text-blue-400">ST-8821</td>
+                                <td class="p-5">Reinforced Steel Grade 80</td>
+                                <td class="p-5">4,200 Tons</td>
+                                <td class="p-5"><span class="px-3 py-1 bg-green-500/10 text-green-500 rounded-full text-[10px] font-bold uppercase">In Stock</span></td>
+                            </tr>
+                            <tr class="hover:bg-white/5 transition-all">
+                                <td class="p-5 font-bold text-blue-400">CO-2204</td>
+                                <td class="p-5">High-Strength Concrete (90MPa)</td>
+                                <td class="p-5">12,400 m³</td>
+                                <td class="p-5"><span class="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full text-[10px] font-bold uppercase">Ordered</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </main>
     </div>
 
+    <div id="overlay" class="fixed inset-0 bg-black/80 z-[100] hidden flex items-center justify-center backdrop-blur-sm">
+        <div class="glass p-10 rounded-3xl text-center max-w-sm">
+            <div class="mb-6 flex justify-center"><span class="material-symbols-outlined text-6xl text-blue-500 animate-bounce">pending</span></div>
+            <h2 class="text-xl font-bold mb-2">Generating Report</h2>
+            <p class="text-slate-400 text-sm mb-6">Compiling structural data for Silhouette Consultants...</p>
+            <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-blue-500 w-0 transition-all duration-300"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        console.log("Silhouette Project Management System v2.0 - Active");
-        
-        // Simple Interaction logic
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                btn.style.transition = 'all 0.2s';
-            });
+        // 1. NAVIGATION LOGIC
+        function showSection(sectionId) {
+            // Hide all
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('sidebar-active'));
+            document.querySelectorAll('.sidebar-item').forEach(b => b.classList.add('text-slate-400'));
+
+            // Show selected
+            document.getElementById('section-' + sectionId).classList.add('active');
+            document.getElementById('btn-' + sectionId).classList.add('sidebar-active');
+            document.getElementById('btn-' + sectionId).classList.remove('text-slate-400');
+        }
+
+        // 2. LIVE CLOCK
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('local-time').innerText = now.toLocaleTimeString('en-US', { hour12: false });
+        }
+        setInterval(updateTime, 1000);
+
+        // 3. CHART.JS INITIALIZATION
+        const ctx = document.getElementById('loadChart').getContext('2d');
+        const loadChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00'],
+                datasets: [{
+                    label: 'Load (kN)',
+                    data: [120, 150, 180, 170, 210, 190],
+                    borderColor: '#3b82f6',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#64748b', font: { size: 10 } } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#64748b', font: { size: 10 } } }
+                }
+            }
         });
+
+        // 4. DATA SIMULATION (LIVE UPDATES)
+        function refreshData() {
+            const progress = (68 + Math.random()).toFixed(1);
+            const labor = Math.floor(400 + Math.random() * 50);
+            const psi = Math.floor(8400 + Math.random() * 100).toLocaleString();
+
+            document.getElementById('stat-progress').innerText = progress + '%';
+            document.getElementById('stat-labor').innerText = labor;
+            document.getElementById('stat-psi').innerText = psi;
+            
+            // Randomize Chart
+            loadChart.data.datasets[0].data = loadChart.data.datasets[0].data.map(d => d + (Math.random() * 10 - 5));
+            loadChart.update();
+        }
+        setInterval(refreshData, 5000);
+
+        // 5. REPORT GENERATION SIMULATION
+        function simulateReport() {
+            const overlay = document.getElementById('overlay');
+            const bar = document.getElementById('progress-bar');
+            overlay.classList.remove('hidden');
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        overlay.classList.add('hidden');
+                        bar.style.width = '0%';
+                        alert('Report Generated: SILHOUETTE_V_SPIRE_SUMMARY.pdf');
+                    }, 500);
+                } else {
+                    width += 5;
+                    bar.style.width = width + '%';
+                }
+            }, 100);
+        }
     </script>
 </body>
 </html>
