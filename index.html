@@ -3,188 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silhouette | Executive Control Center</title>
+    <title>SILHOUETTE | Executive Vision Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f1f5f9; overflow: hidden; }
-        .executive-glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 1.25rem; }
-        .sidebar-btn { transition: all 0.2s; border-radius: 0.75rem; }
-        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
-        .btn-blue { background: #2563eb; transition: 0.2s; }
-        .btn-blue:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        :root {
+            --glass-bg: rgba(10, 15, 30, 0.7);
+            --accent-blue: #007AFF; /* Apple Blue */
+            --ios-blur: blur(25px);
+        }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #02040a;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* خلفية تحاكي انسيابية زها حديد وأبراج KAFD */
+        .kafd-background {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(0, 122, 255, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(94, 92, 230, 0.1) 0%, transparent 40%),
+                url('https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=2000'); /* KAFD Style vibe */
+            background-size: cover;
+            background-position: center;
+            filter: saturate(0.8) brightness(0.4);
+            z-index: -1;
+        }
+        .zaha-curve {
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
+            border-radius: 45% 55% 70% 30% / 30% 30% 70% 70%;
+            transform: rotate(-15deg) translate(-10%, -20%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .ios-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--ios-blur);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ios-card:hover { transform: scale(1.02); border-color: rgba(255,255,255,0.2); }
+        .tab-content { display: none; animation: slideUp 0.5s ease-out; }
+        .tab-content.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .mono { font-family: 'JetBrains Mono', monospace; }
     </style>
 </head>
-<body class="h-screen flex flex-col">
+<body>
 
-    <nav class="h-16 border-b border-white/5 px-8 flex justify-between items-center bg-[#020617] shrink-0">
+    <div class="kafd-background"></div>
+    <div class="zaha-curve"></div>
+
+    <nav class="h-20 flex justify-between items-center px-10 fixed top-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/5">
         <div class="flex items-center gap-6">
-            <h1 class="text-xl font-black tracking-tighter font-['Manrope']">SILHOUETTE<span class="text-blue-600">.</span></h1>
-            <div class="h-4 w-[1px] bg-white/10"></div>
+            <span class="text-2xl font-extrabold tracking-tighter">SILHOUETTE<span class="text-[#007AFF]">.</span></span>
+            <div class="h-6 w-[1px] bg-white/10"></div>
             <div class="flex items-center gap-2">
-                <div class="status-dot"></div>
-                <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">System Active // Riyadh HQ</span>
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-60">System Synchronized</span>
             </div>
         </div>
-        <div class="flex items-center gap-4">
-            <div class="text-right leading-none">
-                <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Managing Director</p>
-                <p class="text-xs font-bold text-blue-500">Caspar Smeets</p>
+        <div class="flex items-center gap-8">
+            <div class="text-right">
+                <p class="text-[9px] font-bold opacity-40 uppercase">Executive Authority</p>
+                <p class="text-xs font-bold text-[#007AFF]">Caspar Smeets</p>
             </div>
-            <div class="w-9 h-9 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center font-bold text-xs">CS</div>
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-slate-800 to-slate-700 flex items-center justify-center font-bold border border-white/10 shadow-2xl">CS</div>
         </div>
     </nav>
 
-    <div class="flex flex-1 overflow-hidden">
-        <aside class="w-64 border-r border-white/5 bg-[#020617] p-4 flex flex-col gap-2 shrink-0">
-            <button class="sidebar-btn p-3 text-sm font-semibold flex items-center gap-3 bg-white/5 text-white">
-                <i class="fas fa-th-large"></i> Dashboard
+    <div class="flex h-screen pt-20">
+        <aside class="w-24 lg:w-72 p-6 flex flex-col gap-4 border-r border-white/5">
+            <button onclick="switchTab('overview')" class="nav-btn active flex items-center gap-4 p-4 rounded-2xl bg-white/10 text-[#007AFF]">
+                <i class="fas fa-home"></i> <span class="hidden lg:block font-bold">Overview</span>
             </button>
-            <button class="sidebar-btn p-3 text-sm font-semibold text-slate-500 flex items-center gap-3">
-                <i class="fas fa-project-diagram"></i> BIM Generation
+            <button onclick="switchTab('projects')" class="nav-btn flex items-center gap-4 p-4 rounded-2xl text-white/50 hover:bg-white/5">
+                <i class="fas fa-building"></i> <span class="hidden lg:block font-bold">Mega Projects</span>
             </button>
-            <button class="sidebar-btn p-3 text-sm font-semibold text-slate-500 flex items-center gap-3">
-                <i class="fas fa-file-invoice"></i> Reports
+            <button onclick="switchTab('automation')" class="nav-btn flex items-center gap-4 p-4 rounded-2xl text-white/50 hover:bg-white/5">
+                <i class="fas fa-microchip"></i> <span class="hidden lg:block font-bold">Automation Hub</span>
             </button>
             
-            <div class="mt-auto executive-glass p-4 border border-blue-500/10">
-                <p class="text-[9px] font-bold text-blue-500 uppercase mb-2">Partner Credentials</p>
-                <div class="space-y-2 text-[10px] text-slate-400">
-                    <p class="flex justify-between"><span>T. Abousakhar</span> <span class="text-white">SCE</span></p>
-                    <p class="flex justify-between"><span>C. Smeets</span> <span class="text-white">RIBA</span></p>
+            <div class="mt-auto ios-card p-6 border-blue-500/20">
+                <p class="text-[10px] font-bold text-[#007AFF] uppercase mb-4">Workflow Optimization</p>
+                <div class="space-y-3">
+                    <div class="flex justify-between text-xs"><span>Time Saved</span><span class="text-green-400 font-bold">+42%</span></div>
+                    <div class="flex justify-between text-xs"><span>Error Margin</span><span class="text-blue-400 font-bold">0.02%</span></div>
                 </div>
             </div>
         </aside>
 
-        <main class="flex-1 p-6 grid grid-cols-12 gap-6 overflow-hidden">
+        <main class="flex-1 overflow-y-auto p-10 relative">
             
-            <div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="executive-glass p-5">
-                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Portfolio Count</p>
-                        <h3 class="text-2xl font-black">13 Projects</h3>
+            <section id="overview" class="tab-content active space-y-10">
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h1 class="text-5xl font-extrabold tracking-tighter mb-2">Vertex <span class="text-[#007AFF]">Vision</span></h1>
+                        <p class="text-white/40 font-semibold uppercase tracking-widest text-xs">Global Architecture Control // Riyadh Office</p>
                     </div>
-                    <div class="executive-glass p-5 border-l-2 border-blue-600">
-                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Sync Status</p>
-                        <h3 class="text-2xl font-black text-blue-500">Optimized</h3>
+                    <button onclick="exportExcel()" class="bg-[#007AFF] hover:bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-xs uppercase shadow-xl transition-all">Export Executive Report</button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="ios-card p-6">
+                        <p class="text-[10px] font-bold opacity-40 uppercase mb-2">Site Efficiency</p>
+                        <h3 class="text-3xl font-black">94.8<span class="text-[#007AFF]">%</span></h3>
                     </div>
-                    <div class="executive-glass p-5">
-                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">YTD Revenue</p>
-                        <h3 class="text-2xl font-black">$4.2M</h3>
+                    <div class="ios-card p-6">
+                        <p class="text-[10px] font-bold opacity-40 uppercase mb-2">BIM Accuracy</p>
+                        <h3 class="text-3xl font-black">99.1<span class="text-green-500">%</span></h3>
+                    </div>
+                    <div class="ios-card p-6">
+                        <p class="text-[10px] font-bold opacity-40 uppercase mb-2">Resource Sync</p>
+                        <h3 class="text-3xl font-black text-blue-400">Stable</h3>
+                    </div>
+                    <div class="ios-card p-6 border-r-4 border-red-500">
+                        <p class="text-[10px] font-bold opacity-40 uppercase mb-2">Pending Approvals</p>
+                        <h3 class="text-3xl font-black">03</h3>
                     </div>
                 </div>
 
-                <div class="executive-glass flex-1 flex flex-col overflow-hidden">
-                    <div class="p-6 border-b border-white/5 flex justify-between items-center">
+                <div class="grid grid-cols-12 gap-8">
+                    <div class="col-span-12 lg:col-span-8 ios-card overflow-hidden group">
+                        <div class="relative aspect-video">
+                            <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1200" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#02040a] to-transparent"></div>
+                            <div class="absolute bottom-8 left-8">
+                                <span class="bg-[#007AFF] px-3 py-1 rounded-full text-[9px] font-bold uppercase mb-4 inline-block">Project Spotlight</span>
+                                <h2 class="text-3xl font-extrabold">King Salman Park (KSP)</h2>
+                                <p class="text-white/60 text-sm mt-1">Status: Structural Integration Level 4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+                        <div class="ios-card p-8 flex-1">
+                            <h3 class="text-xs font-bold uppercase text-[#007AFF] mb-6">Social Connectivity</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <a href="https://linkedin.com" target="_blank" class="flex flex-col items-center gap-3 p-4 bg-white/5 rounded-3xl hover:bg-blue-600/20 transition-all">
+                                    <i class="fab fa-linkedin text-2xl"></i>
+                                    <span class="text-[10px] font-bold uppercase">LinkedIn</span>
+                                </a>
+                                <a href="https://instagram.com" target="_blank" class="flex flex-col items-center gap-3 p-4 bg-white/5 rounded-3xl hover:bg-pink-600/20 transition-all">
+                                    <i class="fab fa-instagram text-2xl"></i>
+                                    <span class="text-[10px] font-bold uppercase">Instagram</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="tab-content space-y-10">
+                <h1 class="text-4xl font-extrabold">KAFD <span class="text-[#007AFF]">District Analysis</span></h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="ios-card p-10">
+                        <h3 class="text-xl font-bold mb-4">Phase II Load Dynamics</h3>
+                        <div class="h-40 bg-slate-800/50 rounded-2xl flex items-center justify-center border border-dashed border-white/10">
+                            <p class="text-xs opacity-40">AI Structural Simulation Active...</p>
+                        </div>
+                    </div>
+                    <div class="ios-card p-10">
+                        <h3 class="text-xl font-bold mb-4">King Salman Park - Zone 4</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between text-sm"><span>Completion Progress</span><span class="font-bold text-green-400">72%</span></div>
+                            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden"><div class="h-full bg-green-500 w-[72%]"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="automation" class="tab-content space-y-10">
+                <h1 class="text-4xl font-extrabold">System <span class="text-[#007AFF]">Automation</span></h1>
+                <div class="ios-card p-10">
+                    <div class="flex items-center gap-8 mb-10">
+                        <div class="w-24 h-24 rounded-full border-4 border-[#007AFF] flex items-center justify-center text-2xl font-black">94%</div>
                         <div>
-                            <h2 class="text-lg font-bold">Project Management Hub</h2>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase">Excel CSV Export/Import Module</p>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="exportToExcel()" class="btn-blue px-4 py-2 rounded-lg text-[10px] font-bold uppercase flex items-center gap-2">
-                                <i class="fas fa-file-csv"></i> Export Data
-                            </button>
-                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-[10px] font-bold uppercase">Import</button>
+                            <h2 class="text-xl font-bold">Auto-Sync Efficiency</h2>
+                            <p class="text-white/40 text-sm">Automated project management is reducing manual workload by 14 hours per week.</p>
                         </div>
                     </div>
-                    <div class="flex-1 overflow-y-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="sticky top-0 bg-[#0f172a] text-[9px] text-slate-500 uppercase font-bold">
-                                <tr>
-                                    <th class="p-4">Reference</th>
-                                    <th class="p-4">Project Entity</th>
-                                    <th class="p-4">Phase</th>
-                                    <th class="p-4">Integrity</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="p-4 font-mono text-blue-500">#VS-002</td>
-                                    <td class="p-4 font-semibold">Vertex Spire II</td>
-                                    <td class="p-4 text-slate-400">Structural</td>
-                                    <td class="p-4"><span class="text-green-500 font-bold">99.2%</span></td>
-                                </tr>
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="p-4 font-mono text-blue-500">#RV-014</td>
-                                    <td class="p-4 font-semibold">Riyadh Villa B-14</td>
-                                    <td class="p-4 text-slate-400">Fit-out</td>
-                                    <td class="p-4"><span class="text-blue-500 font-bold">In-Sync</span></td>
-                                </tr>
-                                <tr class="hover:bg-white/5 transition-colors">
-                                    <td class="p-4 font-mono text-blue-500">#KAFD-01</td>
-                                    <td class="p-4 font-semibold">KAFD Commercial</td>
-                                    <td class="p-4 text-slate-400">Management</td>
-                                    <td class="p-4"><span class="text-green-500 font-bold">Verified</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <button class="w-full py-4 bg-white/5 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-white/10 transition-all">Generate Automated Productivity Log</button>
                 </div>
-            </div>
+            </section>
 
-            <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
-                <div class="executive-glass p-6">
-                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Technical Generation</h2>
-                    <div class="aspect-video bg-slate-900 rounded-xl border border-dashed border-white/10 flex items-center justify-center relative overflow-hidden group">
-                        <img src="https://images.unsplash.com/photo-1503387762-592dea58ef4e?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity">
-                        <div class="relative text-center">
-                            <i class="fas fa-cube text-2xl text-blue-500 mb-2"></i>
-                            <p class="text-[9px] font-bold text-slate-500 uppercase">Generate BIM Preview</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2 mt-4">
-                        <button class="bg-white/5 py-2 rounded-lg text-[10px] font-bold uppercase">3D Render</button>
-                        <button class="bg-blue-600 py-2 rounded-lg text-[10px] font-bold uppercase">BIM Sync</button>
-                    </div>
-                </div>
-
-                <div class="executive-glass p-6 flex-1 flex flex-col">
-                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Social Connectivity</h2>
-                    <div class="grid grid-cols-2 gap-3 flex-1">
-                        <a href="https://linkedin.com" target="_blank" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-[#0077b5]/10 hover:border-[#0077b5]/40 transition-all">
-                            <i class="fab fa-linkedin text-2xl text-[#0077b5]"></i>
-                            <span class="text-[9px] font-bold uppercase">LinkedIn</span>
-                        </a>
-                        <a href="https://instagram.com" target="_blank" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-[#e1306c]/10 hover:border-[#e1306c]/40 transition-all">
-                            <i class="fab fa-instagram text-2xl text-[#e1306c]"></i>
-                            <span class="text-[9px] font-bold uppercase">Instagram</span>
-                        </a>
-                        <a href="mailto:caspar@silhouette.com" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-blue-500/10 transition-all">
-                            <i class="fas fa-envelope text-2xl text-slate-500"></i>
-                            <span class="text-[9px] font-bold uppercase">HQ Email</span>
-                        </a>
-                        <div class="bg-white/5 border-2 border-dashed border-white/5 rounded-2xl flex items-center justify-center opacity-30">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <p class="mt-6 text-[9px] text-center text-slate-600 uppercase tracking-widest">
-                        © 2025 Silhouette Consultants | Riyadh
-                    </p>
-                </div>
-            </div>
         </main>
     </div>
 
+    <footer class="fixed bottom-0 w-full px-10 py-6 flex justify-between items-center text-[10px] font-bold uppercase tracking-[0.3em] opacity-30 z-50">
+        <div>Rights Reserved © Abdulrahman AlMalki</div>
+        <div class="text-[#007AFF]">Specially Designed for Caspar Smeets</div>
+    </footer>
+
     <script>
-        function exportToExcel() {
-            const rows = [
-                ["Ref", "Project Name", "Phase", "Status"],
-                ["#VS-002", "Vertex Spire II", "Structural", "Optimal"],
-                ["#RV-014", "Riyadh Villa B-14", "Fit-out", "In-Sync"],
-                ["#KAFD-01", "KAFD Commercial", "Management", "Verified"]
-            ];
-            let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Silhouette_Caspar_Report.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            alert("Caspar, your Excel CSV report has been generated successfully.");
+        // NAVIGATION LOGIC
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('bg-white/10', 'text-[#007AFF]');
+                b.classList.add('text-white/50');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('bg-white/10', 'text-[#007AFF]');
+            event.currentTarget.classList.remove('text-white/50');
+        }
+
+        // EXCEL EXPORT LOGIC
+        function exportExcel() {
+            const data = "Project,Status,Completion,Efficiency\nKAFD Phase II,Review,88%,94%\nKing Salman Park,Active,72%,92%\nVertex Spire,Stable,100%,98%";
+            const blob = new Blob([data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('hidden', '');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'Silhouette_Caspar_Executive_Report.csv');
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            alert("Caspar, your automated executive report is ready for Microsoft Excel.");
         }
     </script>
 </body>
