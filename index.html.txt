@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silhouette | لوحة التحكم التنفيذية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="topbar">
+        <div class="brand">
+            <div class="brand-logo">SILHOUETTE</div>
+            <div class="brand-divider"></div>
+            <div class="brand-title">لوحة التحكم المهنية</div>
+        </div>
+        <div class="header-actions">
+            <input type="text" class="search-input" placeholder="بحث عن المشاريع، المستندات...">
+            <div class="profile-btn">TA</div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        
+        <section class="hero-section">
+            <div class="hero-image-wrapper">
+                <div class="hero-image"></div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">طارق أبو صخر</h1>
+                <h2 class="hero-subtitle">شريك مؤسس ومهندس معماري أول</h2>
+                <div class="tag-group">
+                    <span class="tag">إدارة التصميم</span>
+                    <span class="tag">تجهيز العقارات</span>
+                    <span class="tag">مشاريع كبرى (KSA)</span>
+                    <span class="tag">قيادة تنفيذية</span>
+                </div>
+                <p class="hero-summary">
+                    عضو معتمد في الهيئة السعودية للمهندسين (SCE)، حاصل على درجة المعمار من جامعة كينغستون بالمملكة المتحدة. خبرة واسعة في تمثيل العملاء وإدارة التصميم للمشاريع المرموقة في الرياض.
+                </p>
+            </div>
+        </section>
+
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">المشاريع المنجزة</div>
+                <div class="kpi-value">12</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">المشاريع الحالية</div>
+                <div class="kpi-value">4</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">مؤشر جودة التصميم</div>
+                <div class="kpi-value">98%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">الالتزام بالجدول الزمني</div>
+                <div class="kpi-value">94%</div>
+            </div>
+        </section>
+
+        <section class="analytics-grid">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">نمو حجم المشاريع (2022 - 2026)</h3>
+                </div>
+                <div class="chart-placeholder">
+                    <div class="chart-line"></div>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">كفاءة المحفظة العامة</h3>
+                </div>
+                <div class="progress-circle-container">
+                    <div class="progress-circle">
+                        <svg>
+                            <circle class="progress-bg" cx="70" cy="70" r="60"></circle>
+                            <circle class="progress-bar" cx="70" cy="70" r="60"></circle>
+                        </svg>
+                        <div class="progress-value">85%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h3 class="panel-title" style="margin-bottom: 1.5rem;">أبرز المشاريع</h3>
+            <div class="portfolio-grid">
+                <article class="project-card">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="KAFD" class="project-img">
+                    <div class="project-info">
+                        <h4 class="project-title">مركز الملك عبدالله المالي (KAFD)</h4>
+                        <div class="project-meta"><span>الرياض، السعودية</span></div>
+                        <div class="project-progress-bg"><div class="project-progress-fill" style="width: 100%;"></div></div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=600&q=80" alt="KSP" class="project-img">
+                    <div class="project-info">
+                        <h4 class="project-title">حديقة الملك سلمان (KSP)</h4>
+                        <div class="project-meta"><span>الرياض، السعودية</span></div>
+                        <div class="project-progress-bg"><div class="project-progress-fill" style="width: 100%;"></div></div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80" alt="Villas" class="project-img">
+                    <div class="project-info">
+                        <h4 class="project-title">مشروع الفلل التوأم</h4>
+                        <div class="project-meta"><span>الرياض، السعودية</span></div>
+                        <div class="project-progress-bg"><div class="project-progress-fill" style="width: 75%;"></div></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="two-col-grid">
+            <div class="panel">
+                <div class="panel-header"><h3 class="panel-title">الكفاءات التقنية</h3></div>
+                <div class="skill-item">
+                    <div class="skill-header"><span>إدارة مراجعة التصميم</span><span>98%</span></div>
+                    <div class="project-progress-bg"><div class="project-progress-fill" style="width: 98%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header"><span>استراتيجية التجهيز العقاري</span><span>95%</span></div>
+                    <div class="project-progress-bg"><div class="project-progress-fill" style="width: 95%;"></div></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><h3 class="panel-title">المسار المهني</h3></div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">يونيو 2025 – الآن</div>
+                        <div class="timeline-title">شريك مؤسس وتنفيذي</div>
+                        <div class="timeline-company">شركة سيلويت للاستشارات المعمارية والهندسية</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="cta-section">
+            <button class="btn btn-secondary">تحميل السيرة الذاتية</button>
+            <button class="btn btn-primary">تواصل مع المهندس</button>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
