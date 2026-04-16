@@ -3,168 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silhouette | Executive Control Hub</title>
+    <title>Silhouette | Executive Control Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050a15; color: #e2e8f0; overflow: hidden; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .btn-action { transition: all 0.2s ease; }
-        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.2); }
-        .grid-bg { background-image: radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 30px 30px; }
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f1f5f9; overflow: hidden; }
+        .executive-glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 1.25rem; }
+        .sidebar-btn { transition: all 0.2s; border-radius: 0.75rem; }
+        .sidebar-btn:hover { background: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+        .btn-blue { background: #2563eb; transition: 0.2s; }
+        .btn-blue:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4); }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 10px #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="h-screen flex flex-col grid-bg">
+<body class="h-screen flex flex-col">
 
-    <nav class="h-16 glass px-8 flex justify-between items-center z-50 shrink-0">
-        <div class="flex items-center gap-4">
-            <span class="text-xl font-black tracking-tighter text-white font-['Manrope']">SILHOUETTE<span class="text-blue-500">.</span></span>
-            <div class="h-6 w-[1px] bg-slate-700 mx-2"></div>
-            <span class="text-[10px] font-bold tracking-[0.3em] text-slate-500 uppercase">Executive Director Portal</span>
-        </div>
+    <nav class="h-16 border-b border-white/5 px-8 flex justify-between items-center bg-[#020617] shrink-0">
         <div class="flex items-center gap-6">
-            <div class="text-right">
-                <p class="text-[9px] text-slate-500 font-bold uppercase">Authorized Access</p>
-                <p class="text-xs font-bold text-blue-400">Caspar Smeets</p>
+            <h1 class="text-xl font-black tracking-tighter font-['Manrope']">SILHOUETTE<span class="text-blue-600">.</span></h1>
+            <div class="h-4 w-[1px] bg-white/10"></div>
+            <div class="flex items-center gap-2">
+                <div class="status-dot"></div>
+                <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">System Active // Riyadh HQ</span>
             </div>
-            <div class="w-10 h-10 rounded-full border-2 border-blue-600/30 p-0.5">
-                <img src="https://ui-avatars.com/api/?name=Caspar+Smeets&background=1e293b&color=3b82f6" class="rounded-full" alt="CS">
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-right leading-none">
+                <p class="text-[9px] text-slate-500 font-bold uppercase mb-1">Managing Director</p>
+                <p class="text-xs font-bold text-blue-500">Caspar Smeets</p>
             </div>
+            <div class="w-9 h-9 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center font-bold text-xs">CS</div>
         </div>
     </nav>
 
-    <div class="flex-1 p-6 grid grid-cols-12 gap-6 overflow-hidden">
-        
-        <div class="col-span-12 lg:col-span-7 flex flex-col gap-6 h-full overflow-hidden">
-            <div class="grid grid-cols-3 gap-4 shrink-0">
-                <div class="glass p-4 rounded-2xl">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Active Projects</p>
-                    <h3 class="text-2xl font-black text-white">13</h3>
-                </div>
-                <div class="glass p-4 rounded-2xl border-l-4 border-blue-500">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Revenue YTD</p>
-                    <h3 class="text-2xl font-black text-white">$4.2M</h3>
-                </div>
-                <div class="glass p-4 rounded-2xl">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Team Efficiency</p>
-                    <h3 class="text-2xl font-black text-white">94%</h3>
-                </div>
-            </div>
-
-            <div class="glass flex-1 rounded-3xl p-6 flex flex-col overflow-hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <div>
-                        <h2 class="text-lg font-bold text-white">Project Data Management</h2>
-                        <p class="text-[10px] text-slate-500 font-bold uppercase">Sync with Microsoft Excel</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="exportData()" class="btn-action bg-green-600/10 text-green-500 border border-green-600/30 px-4 py-2 rounded-xl text-[10px] font-bold uppercase flex items-center gap-2">
-                            <i class="fas fa-file-excel"></i> Export CSV
-                        </button>
-                        <button class="btn-action bg-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-bold uppercase">Import File</button>
-                    </div>
-                </div>
-                <div class="flex-1 overflow-y-auto rounded-xl border border-white/5 bg-slate-900/30">
-                    <table class="w-full text-left text-xs">
-                        <thead class="sticky top-0 glass text-slate-500 uppercase text-[9px] font-bold">
-                            <tr>
-                                <th class="p-4">Project Ref</th>
-                                <th class="p-4">Client</th>
-                                <th class="p-4">Phase</th>
-                                <th class="p-4">Performance</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5">
-                            <tr class="hover:bg-white/5 transition-colors">
-                                <td class="p-4 font-bold text-blue-400">#VS-002</td>
-                                <td class="p-4 text-white">Vertex Spire II</td>
-                                <td class="p-4 text-slate-400">Structural Analysis</td>
-                                <td class="p-4 text-green-500 font-bold">Optimal</td>
-                            </tr>
-                            <tr class="hover:bg-white/5 transition-colors">
-                                <td class="p-4 font-bold text-blue-400">#RV-009</td>
-                                <td class="p-4 text-white">Riyadh Villa B4</td>
-                                <td class="p-4 text-slate-400">Interior Design</td>
-                                <td class="p-4 text-blue-400 font-bold">In-Progress</td>
-                            </tr>
-                            <tr class="hover:bg-white/5 transition-colors">
-                                <td class="p-4 font-bold text-blue-400">#RIC-KAFD</td>
-                                <td class="p-4 text-white">KAFD Fit-out</td>
-                                <td class="p-4 text-slate-400">Site Supervision</td>
-                                <td class="p-4 text-green-500 font-bold">Stable</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-span-12 lg:col-span-5 flex flex-col gap-6 h-full overflow-hidden">
+    <div class="flex flex-1 overflow-hidden">
+        <aside class="w-64 border-r border-white/5 bg-[#020617] p-4 flex flex-col gap-2 shrink-0">
+            <button class="sidebar-btn p-3 text-sm font-semibold flex items-center gap-3 bg-white/5 text-white">
+                <i class="fas fa-th-large"></i> Dashboard
+            </button>
+            <button class="sidebar-btn p-3 text-sm font-semibold text-slate-500 flex items-center gap-3">
+                <i class="fas fa-project-diagram"></i> BIM Generation
+            </button>
+            <button class="sidebar-btn p-3 text-sm font-semibold text-slate-500 flex items-center gap-3">
+                <i class="fas fa-file-invoice"></i> Reports
+            </button>
             
-            <div class="glass p-6 rounded-3xl flex flex-col gap-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-lg font-bold text-white">AI Blueprint Engine</h2>
-                    <span class="bg-blue-600/20 text-blue-500 text-[9px] font-bold px-2 py-1 rounded">BIM Level 3</span>
+            <div class="mt-auto executive-glass p-4 border border-blue-500/10">
+                <p class="text-[9px] font-bold text-blue-500 uppercase mb-2">Partner Credentials</p>
+                <div class="space-y-2 text-[10px] text-slate-400">
+                    <p class="flex justify-between"><span>T. Abousakhar</span> <span class="text-white">SCE</span></p>
+                    <p class="flex justify-between"><span>C. Smeets</span> <span class="text-white">RIBA</span></p>
                 </div>
-                <div class="aspect-video bg-slate-900/50 rounded-2xl border border-dashed border-white/10 flex items-center justify-center group cursor-pointer overflow-hidden relative">
-                    <img src="https://images.unsplash.com/photo-1503387762-592dea58ef4e?auto=format&fit=crop&q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity">
-                    <div class="relative text-center">
-                        <i class="fas fa-microchip text-3xl text-blue-500 mb-2"></i>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Generate Technical Visualization</p>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-6 grid grid-cols-12 gap-6 overflow-hidden">
+            
+            <div class="col-span-12 lg:col-span-8 flex flex-col gap-6">
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="executive-glass p-5">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Portfolio Count</p>
+                        <h3 class="text-2xl font-black">13 Projects</h3>
+                    </div>
+                    <div class="executive-glass p-5 border-l-2 border-blue-600">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Sync Status</p>
+                        <h3 class="text-2xl font-black text-blue-500">Optimized</h3>
+                    </div>
+                    <div class="executive-glass p-5">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">YTD Revenue</p>
+                        <h3 class="text-2xl font-black">$4.2M</h3>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-3 mt-2">
-                    <button class="btn-action bg-slate-800 text-white py-3 rounded-xl text-[10px] font-bold uppercase tracking-wider">Sync Revit Data</button>
-                    <button class="btn-action bg-blue-600 text-white py-3 rounded-xl text-[10px] font-bold uppercase tracking-wider">Generate Render</button>
+
+                <div class="executive-glass flex-1 flex flex-col overflow-hidden">
+                    <div class="p-6 border-b border-white/5 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-lg font-bold">Project Management Hub</h2>
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Excel CSV Export/Import Module</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="exportToExcel()" class="btn-blue px-4 py-2 rounded-lg text-[10px] font-bold uppercase flex items-center gap-2">
+                                <i class="fas fa-file-csv"></i> Export Data
+                            </button>
+                            <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-[10px] font-bold uppercase">Import</button>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-y-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="sticky top-0 bg-[#0f172a] text-[9px] text-slate-500 uppercase font-bold">
+                                <tr>
+                                    <th class="p-4">Reference</th>
+                                    <th class="p-4">Project Entity</th>
+                                    <th class="p-4">Phase</th>
+                                    <th class="p-4">Integrity</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5">
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-blue-500">#VS-002</td>
+                                    <td class="p-4 font-semibold">Vertex Spire II</td>
+                                    <td class="p-4 text-slate-400">Structural</td>
+                                    <td class="p-4"><span class="text-green-500 font-bold">99.2%</span></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-blue-500">#RV-014</td>
+                                    <td class="p-4 font-semibold">Riyadh Villa B-14</td>
+                                    <td class="p-4 text-slate-400">Fit-out</td>
+                                    <td class="p-4"><span class="text-blue-500 font-bold">In-Sync</span></td>
+                                </tr>
+                                <tr class="hover:bg-white/5 transition-colors">
+                                    <td class="p-4 font-mono text-blue-500">#KAFD-01</td>
+                                    <td class="p-4 font-semibold">KAFD Commercial</td>
+                                    <td class="p-4 text-slate-400">Management</td>
+                                    <td class="p-4"><span class="text-green-500 font-bold">Verified</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="glass p-6 rounded-3xl flex-1 flex flex-col">
-                <h2 class="text-sm font-bold text-white uppercase tracking-widest mb-6">Connectivity Hub</h2>
-                <div class="grid grid-cols-2 gap-4 flex-1">
-                    <a href="https://linkedin.com" target="_blank" class="glass border-blue-500/30 flex flex-col items-center justify-center gap-3 rounded-2xl btn-action group">
-                        <i class="fab fa-linkedin text-3xl text-[#0077b5] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">LinkedIn Profile</span>
-                    </a>
-                    <a href="https://instagram.com" target="_blank" class="glass border-pink-500/30 flex flex-col items-center justify-center gap-3 rounded-2xl btn-action group">
-                        <i class="fab fa-instagram text-3xl text-[#e1306c] group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Instagram Feed</span>
-                    </a>
-                    <a href="mailto:info@silhouette.com" class="glass flex flex-col items-center justify-center gap-3 rounded-2xl btn-action group">
-                        <i class="fas fa-envelope text-3xl text-slate-400 group-hover:scale-110 transition-transform"></i>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">HQ Email</span>
-                    </a>
-                    <div class="glass flex flex-col items-center justify-center gap-3 rounded-2xl opacity-50 border-dashed border-slate-700">
-                        <i class="fas fa-plus text-xl text-slate-600"></i>
-                        <span class="text-[10px] font-bold text-slate-600 uppercase">Add Link</span>
+            <div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+                <div class="executive-glass p-6">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Technical Generation</h2>
+                    <div class="aspect-video bg-slate-900 rounded-xl border border-dashed border-white/10 flex items-center justify-center relative overflow-hidden group">
+                        <img src="https://images.unsplash.com/photo-1503387762-592dea58ef4e?auto=format&fit=crop&w=600" class="absolute inset-0 w-full h-full object-cover opacity-20 group-hover:opacity-40 transition-opacity">
+                        <div class="relative text-center">
+                            <i class="fas fa-cube text-2xl text-blue-500 mb-2"></i>
+                            <p class="text-[9px] font-bold text-slate-500 uppercase">Generate BIM Preview</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button class="bg-white/5 py-2 rounded-lg text-[10px] font-bold uppercase">3D Render</button>
+                        <button class="bg-blue-600 py-2 rounded-lg text-[10px] font-bold uppercase">BIM Sync</button>
                     </div>
                 </div>
-                
-                <div class="mt-6 pt-6 border-t border-white/5 flex justify-between items-center text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                    <span>SCE Certified</span>
-                    <span class="text-blue-500">RIBA Member</span>
+
+                <div class="executive-glass p-6 flex-1 flex flex-col">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-6">Social Connectivity</h2>
+                    <div class="grid grid-cols-2 gap-3 flex-1">
+                        <a href="https://linkedin.com" target="_blank" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-[#0077b5]/10 hover:border-[#0077b5]/40 transition-all">
+                            <i class="fab fa-linkedin text-2xl text-[#0077b5]"></i>
+                            <span class="text-[9px] font-bold uppercase">LinkedIn</span>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-[#e1306c]/10 hover:border-[#e1306c]/40 transition-all">
+                            <i class="fab fa-instagram text-2xl text-[#e1306c]"></i>
+                            <span class="text-[9px] font-bold uppercase">Instagram</span>
+                        </a>
+                        <a href="mailto:caspar@silhouette.com" class="bg-white/5 border border-white/10 rounded-2xl flex flex-col items-center justify-center gap-2 hover:bg-blue-500/10 transition-all">
+                            <i class="fas fa-envelope text-2xl text-slate-500"></i>
+                            <span class="text-[9px] font-bold uppercase">HQ Email</span>
+                        </a>
+                        <div class="bg-white/5 border-2 border-dashed border-white/5 rounded-2xl flex items-center justify-center opacity-30">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <p class="mt-6 text-[9px] text-center text-slate-600 uppercase tracking-widest">
+                        © 2025 Silhouette Consultants | Riyadh
+                    </p>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <script>
-        function exportData() {
-            const data = "Ref,Client,Phase,Status\n#VS-002,Vertex Spire II,Structural,Optimal\n#RV-009,Riyadh Villa B4,Interior,In-Progress";
-            const blob = new Blob([data], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.setAttribute('hidden', '');
-            a.setAttribute('href', url);
-            a.setAttribute('download', 'Silhouette_Caspar_Report.csv');
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            alert('Executive Report exported for Microsoft Excel.');
+        function exportToExcel() {
+            const rows = [
+                ["Ref", "Project Name", "Phase", "Status"],
+                ["#VS-002", "Vertex Spire II", "Structural", "Optimal"],
+                ["#RV-014", "Riyadh Villa B-14", "Fit-out", "In-Sync"],
+                ["#KAFD-01", "KAFD Commercial", "Management", "Verified"]
+            ];
+            let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Silhouette_Caspar_Report.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            alert("Caspar, your Excel CSV report has been generated successfully.");
         }
-
-        console.log("Silhouette Executive System V3 - Caspar Smeets Edition");
     </script>
 </body>
 </html>
