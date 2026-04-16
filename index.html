@@ -1,356 +1,70 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Vertex Spire Phase II - Structural Analysis</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Vertex Spire Phase II - Silhouette</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
         tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#0b1326",
-                      "on-tertiary-fixed-variant": "#5d4201",
-                      "on-tertiary-container": "#c7a15a",
-                      "on-tertiary-fixed": "#261900",
-                      "on-secondary-container": "#a9bad3",
-                      "tertiary": "#e9c176",
-                      "surface-dim": "#0b1326",
-                      "surface-container-highest": "#2d3449",
-                      "surface-container-high": "#222a3d",
-                      "primary": "#a4c9ff",
-                      "on-error": "#690005",
-                      "secondary-fixed": "#d3e4fe",
-                      "on-surface-variant": "#c4c7cc",
-                      "primary-fixed": "#d4e3ff",
-                      "on-error-container": "#ffdad6",
-                      "surface-tint": "#a4c9ff",
-                      "on-primary-fixed": "#001c39",
-                      "outline": "#8d9196",
-                      "inverse-on-surface": "#283044",
-                      "error": "#ffb4ab",
-                      "on-tertiary": "#412d00",
-                      "secondary-fixed-dim": "#b7c8e1",
-                      "on-background": "#dae2fd",
-                      "tertiary-fixed": "#ffdea5",
-                      "on-secondary-fixed": "#0b1c30",
-                      "surface-container-low": "#131b2e",
-                      "primary-container": "#003d71",
-                      "on-surface": "#dae2fd",
-                      "outline-variant": "#43474c",
-                      "secondary": "#b7c8e1",
-                      "on-secondary-fixed-variant": "#38485d",
-                      "tertiary-fixed-dim": "#e9c176",
-                      "inverse-surface": "#dae2fd",
-                      "on-primary-fixed-variant": "#004883",
-                      "surface-container-lowest": "#060e20",
-                      "on-primary": "#00315d",
-                      "surface-bright": "#31394d",
-                      "on-primary-container": "#66a9fd",
-                      "tertiary-container": "#503800",
-                      "surface-variant": "#2d3449",
-                      "error-container": "#93000a",
-                      "surface-container": "#171f33",
-                      "on-secondary": "#213145",
-                      "inverse-primary": "#0060ac",
-                      "secondary-container": "#3a4a5f",
-                      "primary-fixed-dim": "#a4c9ff",
-                      "background": "#0b1326"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "fontFamily": {
-                      "headline": ["Manrope"],
-                      "body": ["Inter"],
-                      "label": ["Inter"]
-              }
-            },
-          }
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#0b1326",
+                        "primary": "#a4c9ff",
+                        "tertiary": "#e9c176",
+                        "surface-container-low": "#131b2e",
+                        "on-surface": "#dae2fd"
+                    }
+                }
+            }
         }
     </script>
-<style>
-        body { font-family: 'Inter', sans-serif; background-color: #0b1326; color: #dae2fd; }
-        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         .hud-grid {
             background-image: linear-gradient(#43474c 0.5px, transparent 0.5px), linear-gradient(90deg, #43474c 0.5px, transparent 0.5px);
             background-size: 40px 40px;
             opacity: 0.05;
         }
-        .scanline {
-            background: linear-gradient(to bottom, transparent 50%, rgba(164, 201, 255, 0.02) 50%);
-            background-size: 100% 4px;
-        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen bg-surface">
-<!-- TopNavBar -->
-<header class="w-full top-0 sticky bg-[#0b1326] dark:bg-[#0b1326] z-50">
-<div class="flex justify-between items-center px-8 py-4 w-full max-w-full bg-[#131b2e]">
-<div class="flex items-center gap-8">
-<span class="text-xl font-bold tracking-widest text-[#dae2fd] font-['Manrope']">SILHOUETTE</span>
-<nav class="hidden md:flex items-center gap-6 font-['Manrope'] tracking-tight text-[#dae2fd]">
-<a class="text-[#dae2fd] opacity-70 hover:opacity-100 hover:text-[#a4c9ff] transition-all" href="#">Portfolio</a>
-<a class="text-[#a4c9ff] border-b-2 border-[#a4c9ff] pb-1 hover:opacity-100 hover:text-[#a4c9ff] transition-all" href="#">Analysis</a>
-<a class="text-[#dae2fd] opacity-70 hover:opacity-100 hover:text-[#a4c9ff] transition-all" href="#">Resources</a>
-<a class="text-[#dae2fd] opacity-70 hover:opacity-100 hover:text-[#a4c9ff] transition-all" href="#">Timeline</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="relative hidden lg:block">
-<input class="bg-surface-container-high border-none rounded-xl px-4 py-2 text-sm focus:ring-1 focus:ring-primary w-64 placeholder:text-outline-variant" placeholder="Scan system..." type="text"/>
-<span class="material-symbols-outlined absolute right-3 top-2 text-outline text-sm">search</span>
-</div>
-<button class="text-[#a4c9ff] transition-all Active: scale-95 duration-150">
-<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
-</button>
-<button class="text-[#a4c9ff] transition-all Active: scale-95 duration-150">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-</button>
-<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant">
-<span class="material-symbols-outlined text-primary">person</span>
-</div>
-</div>
-</div>
-</header>
-<div class="flex flex-1">
-<!-- SideNavBar -->
-<aside class="h-screen w-64 left-0 sticky flex flex-col h-full py-8 bg-[#131b2e] dark:bg-[#131b2e] tonal shift against main surface">
-<div class="px-6 mb-12">
-<div class="flex items-center gap-3 mb-1">
-<div class="w-8 h-8 bg-primary-container rounded flex items-center justify-center">
-<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">architecture</span>
-</div>
-<h2 class="text-lg font-black text-[#a4c9ff] font-['Inter'] uppercase tracking-wider">Vertex Spire</h2>
-</div>
-<p class="text-xs text-on-surface-variant font-['Inter'] uppercase tracking-widest opacity-50">Phase II Analysis</p>
-</div>
-<nav class="flex flex-col gap-2 flex-1">
-<a class="text-[#a4c9ff] font-bold border-l-4 border-[#a4c9ff] pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] transition-colors Active: translate-x-1 duration-200 font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
-                    Structural
-                </a>
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors Active: translate-x-1 duration-200 font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
-                    Telemetry
-                </a>
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors Active: translate-x-1 duration-200 font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="layers">layers</span>
-                    Materials
-                </a>
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors Active: translate-x-1 duration-200 font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
-                    Logistics
-                </a>
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors Active: translate-x-1 duration-200 font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="event_available">event_available</span>
-                    Milestones
-                </a>
-</nav>
-<div class="px-4 mt-auto space-y-2">
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
-                    Support
-                </a>
-<a class="text-[#dae2fd] opacity-50 pl-4 flex items-center gap-4 py-3 hover:bg-[#222a3d] hover:opacity-100 transition-colors font-['Inter'] text-sm uppercase tracking-wider" href="#">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-                    Archive
-                </a>
-</div>
-</aside>
-<!-- Main Content Canvas -->
-<main class="flex-1 bg-surface relative overflow-hidden flex flex-col p-8 gap-8">
-<div class="absolute inset-0 hud-grid pointer-events-none"></div>
-<div class="absolute inset-0 scanline pointer-events-none"></div>
-<!-- Page Header -->
-<div class="flex justify-between items-end relative z-10">
-<div>
-<span class="text-primary text-xs font-bold tracking-[0.2em] uppercase">System Diagnosis // Live</span>
-<h1 class="text-4xl font-extrabold text-on-surface tracking-tighter mt-2">VERTEX SPIRE <span class="text-outline-variant font-light">PHASE II</span></h1>
-</div>
-<div class="flex gap-4">
-<div class="text-right">
-<p class="text-[10px] text-outline uppercase tracking-widest">Network Latency</p>
-<p class="text-primary font-mono">14ms</p>
-</div>
-<div class="text-right border-l border-outline-variant pl-4">
-<p class="text-[10px] text-outline uppercase tracking-widest">Core Integrity</p>
-<p class="text-tertiary font-mono">99.8%</p>
-</div>
-</div>
-</div>
-<!-- Top Row: Central Viewport & Telemetry -->
-<div class="grid grid-cols-12 gap-8 relative z-10">
-<!-- Central Viewport -->
-<div class="col-span-12 xl:col-span-8 h-[600px] bg-surface-container-low rounded-xl relative overflow-hidden flex items-center justify-center group border border-outline-variant/10">
-<div class="absolute top-4 left-4 flex flex-col gap-2">
-<div class="bg-surface/80 backdrop-blur px-3 py-1 border-l-2 border-primary text-[10px] uppercase tracking-tighter">Viewport: 3D_WIRE_RE_04</div>
-<div class="bg-surface/80 backdrop-blur px-3 py-1 border-l-2 border-outline-variant text-[10px] uppercase tracking-tighter">Rotation: XY-34.2</div>
-</div>
-<!-- HUD Elements -->
-<div class="absolute inset-0 p-12 pointer-events-none">
-<div class="w-full h-full border border-primary/20 rounded-xl flex items-center justify-center">
-<div class="w-1/2 h-1/2 border-2 border-dashed border-primary/10 rounded-full animate-pulse"></div>
-</div>
-</div>
-<!-- Main Architectural Visual -->
-<img alt="Blueprint Wireframe" class="w-full h-full object-cover opacity-40 mix-blend-screen grayscale" data-alt="monochrome technical wireframe drawing of a futuristic glass skyscraper spire against a dark background with digital HUD overlays and glowing cyan data points" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaubh8bjTphp5jDtaTz7A-lA-8KakL-tdhK9exoU7nvr-jH-xRLJT2NfBcLXmtzz4gMfOJg5oQwEWUZXGZFNbDPAU8YSLwGhhpvG9yhXC893-0Buh120ZK9zC79TYj6tyYzdFRHUJ69Jy-DVC3EKFSVNk6gfidzg5V_VBl68dkYa5mahMDpUWoqr8TQEK3P2dnCG57cxNIKWll-Oy6BAobdExF4zyiDASmQtM_NKklMDj5KQ0z2syeGq-J6ZiRT7U7MmB3D9rDzWJa"/>
-<!-- Overlay Data Points -->
-<div class="absolute top-[30%] left-[45%] group-hover:scale-110 transition-transform cursor-crosshair">
-<div class="w-4 h-4 bg-primary/20 rounded-full border border-primary flex items-center justify-center animate-ping"></div>
-<div class="absolute top-0 left-6 bg-surface-container-highest/90 backdrop-blur-md p-2 border border-primary/30 rounded-lg w-40">
-<p class="text-[10px] uppercase text-primary font-bold">Node 401: Stress Peak</p>
-<p class="text-xs text-on-surface">44.2kN Force applied</p>
-</div>
-</div>
-<!-- Physical Site Feed Overlay -->
-<div class="absolute bottom-6 right-6 w-64 h-40 bg-surface-container-highest rounded-lg overflow-hidden border border-outline-variant shadow-2xl">
-<div class="absolute top-2 left-2 z-10 flex items-center gap-2">
-<span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-<span class="text-[9px] uppercase tracking-widest text-white font-bold bg-black/50 px-2 py-0.5 rounded">Live Cam 08</span>
-</div>
-<img alt="Construction Site Feed" class="w-full h-full object-cover grayscale brightness-75 contrast-125" data-alt="gritty high-contrast grayscale aerial view of a busy construction foundation site with heavy machinery and steel beams at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkESwM0ShisamZ70_PqXagVq6wyJcIaFwexXm3Zaew56HjWtaQJiX97uZVFov_xxofCavNdFG4MP6RVajjf5CLF6VZFS8a9L36a5Zw6kq2vxKESLqoFjsvVPv977lRLfajciSt2ql_Fy7sC4GHQIBmBRXWiQwhCf2TEiggiOAMS86jV48RVqalWpc54yg6QLui2eM9eQ97Svszfi7C3tc-YPeh_oj8QNyPeeTRxGaqY7apvN8DC7IAoJNgHkxuh4jghmHhACv3IPWi"/>
-</div>
-</div>
-<!-- Structural Telemetry Panel -->
-<div class="col-span-12 xl:col-span-4 flex flex-col gap-6">
-<div class="bg-surface-container-high rounded-xl p-6 flex flex-col justify-between h-full border border-outline-variant/10">
-<div class="flex items-center justify-between mb-8">
-<h3 class="text-primary text-sm font-bold uppercase tracking-widest">Telemetry Readouts</h3>
-<span class="material-symbols-outlined text-outline">query_stats</span>
-</div>
-<div class="space-y-8">
-<!-- Wind Load -->
-<div>
-<div class="flex justify-between items-end mb-2">
-<span class="text-xs text-on-surface-variant uppercase tracking-widest">Wind Load Resistance</span>
-<span class="text-2xl font-mono text-on-surface font-bold">0.14 <span class="text-xs text-outline">rad/s</span></span>
-</div>
-<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
-<div class="bg-primary h-full w-[14%]"></div>
-</div>
-</div>
-<!-- Seismic -->
-<div>
-<div class="flex justify-between items-end mb-2">
-<span class="text-xs text-on-surface-variant uppercase tracking-widest">Seismic Stability</span>
-<span class="text-2xl font-mono text-error font-bold">9.2 <span class="text-xs text-outline">CRITICAL</span></span>
-</div>
-<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
-<div class="bg-error h-full w-[92%]"></div>
-</div>
-</div>
-<!-- Core Pressure -->
-<div>
-<div class="flex justify-between items-end mb-2">
-<span class="text-xs text-on-surface-variant uppercase tracking-widest">Core Pressure</span>
-<span class="text-2xl font-mono text-tertiary font-bold">884 <span class="text-xs text-outline">PSI</span></span>
-</div>
-<div class="w-full bg-surface-container-lowest h-1.5 rounded-full overflow-hidden">
-<div class="bg-tertiary h-full w-[68%]"></div>
-</div>
-</div>
-</div>
-<div class="mt-auto pt-8 border-t border-outline-variant/10">
-<button class="w-full bg-gradient-to-br from-primary to-primary-container py-3 rounded-xl font-bold text-on-primary tracking-wide transition-all hover:shadow-[0_0_15px_rgba(164,201,255,0.3)]">
-                                RUN GLOBAL SIMULATION
-                            </button>
-</div>
-</div>
-</div>
-</div>
-<!-- Bottom Row: Materials & Engineering Log -->
-<div class="grid grid-cols-12 gap-8 relative z-10 pb-12">
-<!-- Materials Specification -->
-<div class="col-span-12 lg:col-span-8">
-<div class="flex items-center justify-between mb-6">
-<h3 class="text-on-surface text-xl font-bold tracking-tight">Materials Specification</h3>
-<span class="text-primary text-xs uppercase tracking-widest cursor-pointer hover:underline">View All Inventory</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-<!-- Card 1 -->
-<div class="bg-surface-container-high p-5 rounded-xl border border-outline-variant/10 hover:bg-surface-container-highest transition-all group">
-<div class="w-10 h-10 bg-primary-container rounded-lg mb-4 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">grid_view</span>
-</div>
-<h4 class="text-on-surface font-bold text-sm">Low-E Glass T-80</h4>
-<p class="text-xs text-outline-variant mt-1 mb-4">Structural glazing unit</p>
-<div class="flex justify-between items-center text-[10px] text-outline uppercase font-mono">
-<span>Batch: 99-A</span>
-<span class="text-primary">In Stock</span>
-</div>
-</div>
-<!-- Card 2 -->
-<div class="bg-surface-container-high p-5 rounded-xl border border-outline-variant/10 hover:bg-surface-container-highest transition-all">
-<div class="w-10 h-10 bg-primary-container rounded-lg mb-4 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">hardware</span>
-</div>
-<h4 class="text-on-surface font-bold text-sm">Grade 80 Steel</h4>
-<p class="text-xs text-outline-variant mt-1 mb-4">High-tensile reinforcement</p>
-<div class="flex justify-between items-center text-[10px] text-outline uppercase font-mono">
-<span>Batch: 42-F</span>
-<span class="text-primary">Deployed</span>
-</div>
-</div>
-<!-- Card 3 -->
-<div class="bg-surface-container-high p-5 rounded-xl border border-outline-variant/10 hover:bg-surface-container-highest transition-all">
-<div class="w-10 h-10 bg-primary-container rounded-lg mb-4 flex items-center justify-center text-primary">
-<span class="material-symbols-outlined">texture</span>
-</div>
-<h4 class="text-on-surface font-bold text-sm">C-Matrix Composite</h4>
-<p class="text-xs text-outline-variant mt-1 mb-4">Carbon-fiber core plating</p>
-<div class="flex justify-between items-center text-[10px] text-outline uppercase font-mono">
-<span>Batch: 11-X</span>
-<span class="text-tertiary">Reviewing</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Engineering Log -->
-<div class="col-span-12 lg:col-span-4">
-<h3 class="text-on-surface text-xl font-bold tracking-tight mb-6">Engineering Log</h3>
-<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 divide-y divide-outline-variant/10">
-<div class="p-4 flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-2 h-2 bg-primary rounded-full"></div>
-<div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
-</div>
-<div>
-<p class="text-[10px] text-outline uppercase tracking-widest font-mono">08:42 // SITE INSPECTION</p>
-<p class="text-xs text-on-surface mt-1">Foundation core pouring complete. Density verified at 2400kg/m³.</p>
-</div>
-</div>
-<div class="p-4 flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-2 h-2 bg-primary rounded-full"></div>
-<div class="w-0.5 flex-1 bg-outline-variant/30 my-1"></div>
-</div>
-<div>
-<p class="text-[10px] text-outline uppercase tracking-widest font-mono">Yesterday // WIND TUNNEL</p>
-<p class="text-xs text-on-surface mt-1">Laminar flow analysis performed on Spire Section G. Passed 120% load test.</p>
-</div>
-</div>
-<div class="p-4 flex gap-4">
-<div class="flex flex-col items-center">
-<div class="w-2 h-2 bg-tertiary rounded-full"></div>
-</div>
-<div>
-<p class="text-[10px] text-tertiary uppercase tracking-widest font-mono">04.12 // MILESTONE</p>
-<p class="text-xs text-on-surface mt-1">Permit for structural steel Phase III approved by city architectural board.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-</body></html>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface">
+
+    <header class="w-full top-0 sticky bg-[#0b1326] z-50 border-b border-white/5">
+        <div class="flex justify-between items-center px-8 py-4 w-full bg-[#131b2e]">
+            <div class="flex items-center gap-8">
+                <span class="text-xl font-bold tracking-widest font-['Manrope']">SILHOUETTE</span>
+                <nav class="hidden md:flex items-center gap-6 text-sm uppercase tracking-wider">
+                    <a href="#projects-section" class="opacity-70 hover:opacity-100 hover:text-primary transition-all">Projects</a>
+                    <a href="#analysis-section" class="text-primary border-b border-primary pb-1">Analysis</a>
+                    <a href="#log-section" class="opacity-70 hover:opacity-100 hover:text-primary transition-all">Logs</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="alert('No new notifications')" class="text-primary"><span class="material-symbols-outlined">notifications</span></button>
+                <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-white/10">
+                    <span class="material-symbols-outlined text-primary">person</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1">
+        <aside class="w-64 sticky top-[72px] h-[calc(100vh-72px)] bg-[#131b2e] p-6 hidden lg:flex flex-col gap-8">
+            <div>
+                <h2 class="text-primary font-bold uppercase tracking-widest text-sm mb-1">Vertex Spire</h2>
+                <p class="text-[10px] opacity-50 uppercase tracking-[0.2em]">Riyadh - Phase II</p>
+            </div>
+            <nav class="flex flex-col gap-4">
+                <a href="#" class="flex items-center gap-3 text-primary font-bold"><span class="material-symbols-outlined">architecture</span> Structural</a>
+                <a href="#" class="flex items-center gap-3 opacity-50 hover:opacity-100"><span class="material-symbols-outlined">sensors</span> Telemetry</a>
+                <a href="#" class="flex items-center gap-3 opacity-50 hover:opacity-100"><span class="material-symbols-outlined">layers</span> Materials</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8 relative overflow-hidden">
+            <div class="absolute inset-0 hud-grid pointer-events-none"></div>
